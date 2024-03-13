@@ -1,10 +1,17 @@
-import Link from "next/link.js";
+"use client";
+
+import Link from "next/link";
 import Links from "./links/Links.jsx";
 import styles from "./navbar.module.css";
-import { auth } from "@/lib/auth.js";
+import { useEffect, useState } from "react";
 
-const Navbar = async () => {
-  const session = await auth();
+const Navbar = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("token");
+    setUser(storedUser);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -12,7 +19,7 @@ const Navbar = async () => {
         Logo
       </Link>
       <div>
-        <Links session={session} />
+        <Links session={{ user }} />
       </div>
     </div>
   );

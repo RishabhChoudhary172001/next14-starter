@@ -2,8 +2,6 @@
 import { revalidatePath } from "next/cache";
 import { Post } from "./model";
 import { connectToDb } from "./utils";
-import { signIn, signOut } from "./auth";
-
 
 
 
@@ -43,12 +41,6 @@ export const deletePost = async (formData) => {
     }
 }
 
-
-export const handleGithubLogin = async () => {
-    await signIn("github");
-};
-
-
 export const handleLogout = async () => {
-    await signOut();
+    return "string";
 }

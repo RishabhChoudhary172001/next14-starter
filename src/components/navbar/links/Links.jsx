@@ -1,33 +1,40 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./links.module.css";
 import NavLink from "./navLink/navLink";
 import Image from "next/image";
-import { handleLogout } from "@/lib/action";
-const links = [
-  {
-    title: "Homepage",
-    path: "/",
-  },
-  {
-    title: "About",
-    path: "/about",
-  },
-  {
-    title: "Contact",
-    path: "/contact",
-  },
-  {
-    title: "Blog",
-    path: "/blog",
-  },
-];
 
 const Links = ({ session }) => {
   const [open, setOpen] = useState(false);
 
-  const isAdmin = true;
+  useEffect(() => {
+    // This effect will trigger whenever the session prop changes
+    // You can use it to handle any side effects related to session changes
+    // For example, if you need to perform some action when the user logs in or logs out
+  }, [session]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
+  const links = [
+    {
+      title: "Homepage",
+      path: "/",
+    },
+    {
+      title: "About",
+      path: "/about",
+    },
+    {
+      title: "Contact",
+      path: "/contact",
+    },
+    {
+      title: "Blog",
+      path: "/blog",
+    },
+  ];
 
   return (
     <div className={styles.container}>
@@ -40,8 +47,13 @@ const Links = ({ session }) => {
             {session.user?.isAdmin && (
               <NavLink item={{ title: "Admin", path: "/admin" }} />
             )}
-            <form action={handleLogout}>
-              <button className={styles.logout}>Logout</button>
+            <form onSubmit={handleLogout}>
+              {" "}
+              {/* Changed action to onSubmit */}
+              <button type="submit" className={styles.logout}>
+                Logout
+              </button>{" "}
+              {/* Added type="submit" */}
             </form>
           </>
         ) : (

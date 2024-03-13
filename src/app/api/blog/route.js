@@ -1,6 +1,6 @@
 import { Post } from "@/lib/model";
 import { connectToDb } from "@/lib/utils";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request, response) => {
 
